@@ -1,19 +1,33 @@
 import { useForm, Controller } from 'react-hook-form';
-import { FiCalendar } from 'react-icons/fi';
 import clsx from 'clsx';
 import TextField from './TextField';
-import Select from '../Select';
+import Select, { type Option } from '../Select';
 import DatePicker from '../Datepicker';
+import Dropdown from './Dropdown';
+import { useState } from 'react';
 
 type FormValues = {
     name: string;
     date: string;
-    classes: string;
+    dob: Date;
+    classes: Option;
+    menu: string
 };
+import { FaApple } from 'react-icons/fa';
 
+const options = [
+    { value: 'apple', label: 'Apple', icon: <FaApple /> },
+    { value: 'banana', label: 'Banana', icon: <FaApple /> },
+    { value: 'cherry', label: 'Cherry', icon: <FaApple /> },
+];
+
+const classOptions: Option[] = [
+    { value: "Class A", label: "Class A" },
+    { value: "Class B", label: "Class B" },
+]
 const FormWidget = () => {
     const { handleSubmit, control } = useForm<FormValues>();
-
+    const [selected, setSelected] = useState<string | number>('apple');
     const handleDateChange = (dates) => {
         console.log('Selected dates:', dates);
     };
@@ -42,29 +56,11 @@ const FormWidget = () => {
                 )}
             />
             <Controller
-                name="date"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                    <TextField
-                        {...field}
-                        id="date"
-                        label="Select date"
-                        type="date"
-                        isFloating
-                        icon={<FiCalendar className="text-gray-400" />}
-                        iconClass="pointer-events-none flex items-center justify-end bg-white"
-                        inputClass={inputClass}
-                    />
-                )}
-            />
-            <Controller
                 name="classes"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                     <Select
-                        options={[{ value: "Bilal", label: "Bilal" }, { value: "Ali", label: "Ali" }]}
+                        options={classOptions}
                         {...field}
                         headerClass='w-full rounded border border-gray-300 appearance-none focus:outline-none focus:ring focus:ring-blue-400 peer'
                         containerClass='w-full'
@@ -75,10 +71,26 @@ const FormWidget = () => {
 
             <div>
                 <h2>Single Date Picker</h2>
-                <DatePicker onChange={handleDateChange} />
-
+                <Controller
+                    name="dob"
+                    control={control}
+                    render={({ field }) => (
+                        <DatePicker {...field} />
+                    )}
+                />
                 <h2>Multiple Date Picker</h2>
                 <DatePicker multiple={true} onChange={handleDateChange} />
+            </div>
+
+            <div>
+                <Dropdown
+                    value={selected}
+                    onChange={setSelected}
+                    options={options}
+                    animated
+                    placeholder="Select a fruit"
+                    iconPosition='right'
+                />
             </div>
 
             <button

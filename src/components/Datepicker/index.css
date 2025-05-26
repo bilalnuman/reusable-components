@@ -26,14 +26,7 @@
     border-radius: 4px;
 }
 
-.datepicker-container {
-    font-family: Arial, sans-serif;
-    width: 300px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+
 
 .datepicker-header {
     display: flex;
@@ -41,13 +34,15 @@
     align-items: center;
     margin-bottom: 10px;
 }
-.datepicker-header .double-back,.datepicker-header .back{
+
+.datepicker-header .double-back,
+.datepicker-header .back {
     transform: rotate(180deg);
 }
 
 .datepicker-header select {
     padding: 5px 8px;
-    border:none;
+    border: none;
     border-radius: 3px;
     font-size: 14px;
     cursor: pointer;
@@ -65,9 +60,11 @@
     cursor: pointer;
     font-size: 14px;
 }
-.datepicker-header select:focus-within{
+
+.datepicker-header select:focus-within {
     outline: none;
 }
+
 .datepicker-weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -89,7 +86,7 @@
 
 .datepicker-day {
     font-size: 12px;
-    padding:8px 5px;
+    padding: 8px 5px;
     text-align: center;
     border-radius: 3px;
     cursor: pointer;
@@ -128,6 +125,7 @@
     font-size: 12px;
     color: #007bff;
 }
+
 .datepicker-today {
     color: #007bff;
     border: none;
@@ -144,4 +142,13 @@
     padding: 5px;
     background-color: #f8f9fa;
     border-radius: 3px;
+}
+
+.datepicker-container .datepicker-popup {
+    font-family: Arial, sans-serif;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
