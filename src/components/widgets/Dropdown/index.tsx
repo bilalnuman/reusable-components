@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+    useState,
+    useRef,
+    useEffect,
+    useCallback,
+    forwardRef,
+} from 'react';
 import './index.css';
 import { CaretIcon } from './CaretIcon';
 
@@ -11,70 +17,107 @@ export interface DropdownOption {
 export interface DropdownProps {
     name?: string;
     value?: string | number;
-    onChange: (value: any) => void;
+    onChange: (value: string | number) => void;
     options: DropdownOption[];
     iconPosition?: 'left' | 'right';
     placeholder?: string;
     animated?: boolean;
-    icon?: string,
+    icon?: string;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
+const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({
     name,
     value,
     onChange,
     options,
     iconPosition = 'left',
     placeholder = 'Select',
-    icon = '',
     animated = false,
-}) => {
+}, ref) => {
     const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const selectedOption = options.find((opt) => opt.value === value);
+    const selectedOption = options.find(option => option.value === value);
 
-    const handleSelect = (option: DropdownOption) => {
+    const handleSelect = useCallback((option: DropdownOption) => {
         onChange(option.value);
         setIsOpen(false);
-    };
+    }, [onChange]);
 
-    const toggleDropdown = () => setIsOpen((prev) => !prev);
+    const toggleDropdown = useCallback(() => {
+        setIsOpen(prev => !prev);
+    }, []);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(event.target as Node)
+            ) {
                 setIsOpen(false);
             }
         };
+
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
     return (
-        <div className="dropdown" ref={dropdownRef}>
-            <div className="dropdown-toggle" onClick={toggleDropdown}>
+        <div
+            className="dropdown"
+            tabIndex={0}
+            ref={(el) => {
+                containerRef.current = el;
+                if (typeof ref === 'function') ref(el);
+                else if (ref) ref.current = el;
+            }}
+        >
+            <div
+                className="dropdown-toggle"
+                onClick={toggleDropdown}
+                role="button"
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
+            >
                 <span>{selectedOption?.label || placeholder}</span>
-                <span style={{ transition: "ease-in-out 300ms", transform: `rotate(${isOpen ? "180deg" : "0deg"})` }}><CaretIcon /></span>
+                <span className={`dropdown-caret ${isOpen ? 'open' : ''}`}>
+                    <CaretIcon />
+                </span>
             </div>
 
-            <ul className={`dropdown-menu ${isOpen ? 'open' : ''} ${animated ? 'animated' : ''}`}>
+            <ul
+                className={`dropdown-menu${isOpen ? ' open' : ''}${animated ? ' animated' : ''
+                    }`}
+                role="listbox"
+                aria-label={name}
+            >
                 {options.map((option) => (
                     <li
                         key={option.value}
-                        className={`dropdown-item ${option.value === value ? 'selected' : ''}`}
+                        role="option"
+                        aria-selected={option.value === value}
+                        className={`dropdown-item${option.value === value ? ' selected' : ''
+                            }`}
                         onClick={() => handleSelect(option)}
-                        style={{display:"flex", justifyContent:iconPosition === "right"?"space-between":"start"}}
+                        style={{
+                            justifyContent:
+                                option.icon && iconPosition === 'right' ? 'space-between' : 'flex-start',
+                        }}
                     >
-                        {option.icon && iconPosition === 'left' && <span className="icon">{option.icon}</span>}
+                        {option.icon && iconPosition === 'left' && (
+                            <span className="icon">{option.icon}</span>
+                        )}
                         <span>{option.label}</span>
-                        {option.icon && iconPosition === 'right' && <span className="icon">{option.icon}</span>}
+                        {option.icon && iconPosition === 'right' && (
+                            <span className="icon">{option.icon}</span>
+                        )}
                     </li>
                 ))}
             </ul>
-
         </div>
     );
-};
+});
+
+Dropdown.displayName = 'Dropdown';
 
 export default Dropdown;

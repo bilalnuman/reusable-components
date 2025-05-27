@@ -1,9 +1,9 @@
 import { useForm, Controller } from 'react-hook-form';
 import clsx from 'clsx';
-import TextField from './TextField';
-import Select, { type Option } from '../Select';
-import DatePicker from '../Datepicker';
+import Select, { type Option } from './Select';
+import DatePicker from './Datepicker';
 import Dropdown from './Dropdown';
+import TextField from './TextField';
 import { useState } from 'react';
 
 type FormValues = {
@@ -14,6 +14,9 @@ type FormValues = {
     menu: string
 };
 import { FaApple } from 'react-icons/fa';
+import Checkbox from './Checkbox';
+import Radio from './Radio';
+import TextArea from './Textarea';
 
 const options = [
     { value: 'apple', label: 'Apple', icon: <FaApple /> },
@@ -62,9 +65,8 @@ const FormWidget = () => {
                     <Select
                         options={classOptions}
                         {...field}
-                        headerClass='w-full rounded border border-gray-300 appearance-none focus:outline-none focus:ring focus:ring-blue-400 peer'
+                        headerClass='w-full rounded border border-gray-300 peer'
                         containerClass='w-full'
-                        searchable={true}
                     />
                 )}
             />
@@ -92,7 +94,9 @@ const FormWidget = () => {
                     iconPosition='right'
                 />
             </div>
-
+            <Checkbox label='Remember me' />
+            <Radio label='Remember me' />
+            <TextArea />
             <button
                 type="submit"
                 className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"

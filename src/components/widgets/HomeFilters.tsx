@@ -3,7 +3,7 @@ import { useState } from 'react';
 import List from './List';
 import ListItem from './ListItem';
 import Button from './Button';
-import Select, { type Option } from '../Select';
+import Select, { type Option } from '@components/widgets/Select';
 
 export type Brand = {
     value: string;

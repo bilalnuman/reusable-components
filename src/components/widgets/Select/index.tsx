@@ -111,7 +111,7 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div className={clsx('select-container', prefixClass, containerClass)} ref={dropdownRef}>
-      <div className={clsx('select-header', headerClass)} onClick={() => setIsOpen(!isOpen)}>
+      <div className={clsx('select-header', headerClass)} onClick={() => setIsOpen(!isOpen)} tabIndex={0}>
         <span className={isMulti ? 'multiple-value' : 'single-value'}>{displayValue()}</span>
         <span className={`caret-icon arrow ${isOpen ? 'open' : ''}`}>
           <CaretIcon />

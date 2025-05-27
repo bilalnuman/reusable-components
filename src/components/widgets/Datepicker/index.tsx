@@ -259,9 +259,22 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
                 setInputValue(selectedText);
             }
         }, [selectedText, multiple]);
+        useEffect(() => {
+            const handleClickOutside = (event: MouseEvent) => {
+                if (
+                    pickerRef.current &&
+                    !pickerRef.current.contains(event.target as Node)
+                ) {
+                    setShowPicker(false);
+                }
+            };
+
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => document.removeEventListener('mousedown', handleClickOutside);
+        }, []);
 
         return (
-            <div className="datepicker-container" ref={pickerRef}>
+            <div className="datepicker-container">
                 <div className='datepicker-input-wrapper'>
                     <input
                         type="text"
@@ -278,11 +291,11 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
                         aria-expanded={showPicker}
                         aria-label="Date picker input"
                     />
-                    <span className='icon'><Icon name='calender' /></span>
+                    <button  onFocus={() => setShowPicker(true)} className='icon'><Icon name='calender' /></button>
                 </div>
 
                 {showPicker && (
-                    <div className="datepicker-popup" role="dialog" aria-modal="true">
+                    <div className="datepicker-popup" role="dialog" aria-modal="true"  ref={pickerRef}>
                         <div className="datepicker-header">
                             <button type='button'
                                 onClick={() =>

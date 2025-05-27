@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+input:-webkit-autofill {
+    background-color: transparent !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+}
 
 aside .active {
     @apply text-white font-semibold bg-blue-400;
