@@ -14,4 +14,9 @@ export const sidebarItems = [
         "href": "products",
         "icon": ""
     },
+    {
+        "label": "Tables",
+        "href": "table",
+        "icon": ""
+    },
 ]

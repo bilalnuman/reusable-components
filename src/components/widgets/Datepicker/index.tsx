@@ -290,6 +290,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
                         aria-haspopup="grid"
                         aria-expanded={showPicker}
                         aria-label="Date picker input"
+                        autoComplete='off'
                     />
                     <button  onFocus={() => setShowPicker(true)} className='icon'><Icon name='calender' /></button>
                 </div>

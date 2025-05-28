@@ -53,7 +53,6 @@ const FormWidget = () => {
                         id="name"
                         label="Enter your name"
                         type="text"
-                        isFloating
                         inputClass={inputClass}
                     />
                 )}
@@ -94,8 +93,9 @@ const FormWidget = () => {
                     iconPosition='right'
                 />
             </div>
-            <Checkbox label='Remember me' />
-            <Radio label='Remember me' />
+            <Checkbox value="remember" label='Remember me' onChange={(e) => console.log(e.target.value)} />
+            <Radio value="male" label='Male' name='gender' onChange={(e) => console.log(e.target.value)} />
+            <Radio value="female" label='Female' name='gender' onChange={(e) => console.log(e.target.value)} />
             <TextArea />
             <button
                 type="submit"

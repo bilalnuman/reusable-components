@@ -6,6 +6,7 @@ import { PageNotfound } from '@components/PageNotfound';
 
 import Home from '@components/Home';
 import FormWidget from './components/widgets/FormWidget';
+import Table from './pages/Table';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Home /> },
+      { path: 'table', element: <Table /> },
       { path: 'forms', element: <FormWidget /> },
       {
         path: 'products',

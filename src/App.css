@@ -15,3 +15,11 @@ aside .active {
 .scrollbar-hidden::-webkit-scrollbar {
     @apply hidden
 }
+
+aside {
+    transition: ease-in-out 300ms;
+}
+
+.open-sidebar aside {
+    width: 0px;
+}
