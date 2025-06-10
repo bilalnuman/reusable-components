@@ -1,0 +1,27 @@
+.Searchcontainer {
+    border: 1px solid #ccc;
+    min-height: 40px;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+    border-radius: 4px;
+    transition: box-shadow 0.2s ease;
+}
+
+.Searchcontainer input {
+    background: none;
+    flex: 1 1 0%;
+    border: none;
+    font-size: 1rem;
+}
+
+.Searchcontainer input:focus {
+    outline: none;
+}
+
+.focused {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}

@@ -6,14 +6,16 @@ import {
 } from '../services/productService';
 
 // List products
-export const useProducts = (filters: any, enabled: boolean = true) => {
-    return useQuery({
-        queryKey: ['products', filters],
-        queryFn: () => fetchProducts(filters),
-        enabled,
-        staleTime: Object.keys(filters).length ? 1000 * 60 : 0,
-    });
+
+export const useProducts = (filters: string, enabled: boolean = true) => {
+  return useQuery({
+    queryKey: ['products', filters],
+    queryFn: () => fetchProducts(filters),
+    enabled,
+    staleTime: filters ? 1000 * 60 : 0,
+  });
 };
+
 
 // Get single product
 export const useProduct = (id: string) =>

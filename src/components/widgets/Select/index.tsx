@@ -29,7 +29,7 @@ interface SelectProps {
 
 const Select: React.FC<SelectProps> = ({
   value,
-  onChange = () => { },
+  onChange,
   getSingleValue = () => { },
   options,
   placeholder = 'Select...',
@@ -79,12 +79,6 @@ const Select: React.FC<SelectProps> = ({
     return (value as Option)?.label || placeholder;
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setIsOpen(false);
-      setSearchTerm('');
-    }
-  };
 
   const handleScroll = (e: UIEvent<HTMLDivElement>) => {
     if (!enableInfiniteScroll) return;
@@ -98,13 +92,20 @@ const Select: React.FC<SelectProps> = ({
     option.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+      setSearchTerm('');
+    }
+  };
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       setIsOpen(false);
       setSearchTerm('');
-      onChange(isMulti ? [] : null);
+      // onChange(isMulti ? [] : null);
       getSingleValue(null);
     };
   }, []);

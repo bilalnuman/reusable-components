@@ -43,6 +43,7 @@ const FormWidget = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <input type='date'/>
             <Controller
                 name="name"
                 control={control}
@@ -64,6 +65,8 @@ const FormWidget = () => {
                     <Select
                         options={classOptions}
                         {...field}
+                        isMulti
+                        searchable
                         headerClass='w-full rounded border border-gray-300 peer'
                         containerClass='w-full'
                     />

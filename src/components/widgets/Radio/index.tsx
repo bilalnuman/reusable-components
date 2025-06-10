@@ -1,5 +1,5 @@
 import React, { type InputHTMLAttributes, forwardRef } from 'react';
-import './index.css';
+import styles from './index.module.css';
 
 export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
     label: string;
@@ -7,10 +7,10 @@ export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
 
 const Radio = forwardRef<HTMLInputElement, RadioProps>(({ label, ...rest }, ref) => {
     return (
-        <label className="radio-wrapper">
+        <label className={styles.radiowrapper}>
             <input
                 type="radio"
-                className="radio"
+                className={styles.radio}
                 ref={ref}
                 {...rest}
             />

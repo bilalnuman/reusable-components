@@ -282,7 +282,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
                         ref={inputRef}
                         className="datepicker-input"
                         value={inputValue}
-                        onFocus={() => setShowPicker(true)}
+                        onClick={() => setShowPicker(!showPicker)}
                         onChange={handleInputChange}
                         onBlur={handleInputBlur}
                         placeholder={multiple ? 'Select dates...' : 'YYYY-MM-DD'}
@@ -292,7 +292,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
                         aria-label="Date picker input"
                         autoComplete='off'
                     />
-                    <button  onFocus={() => setShowPicker(true)} className='icon'><Icon name='calender' /></button>
+                    <button  onClick={() => setShowPicker(!showPicker)} className='icon'><Icon name='calender' /></button>
                 </div>
 
                 {showPicker && (

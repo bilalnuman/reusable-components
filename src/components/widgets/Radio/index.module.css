@@ -1,11 +1,11 @@
-.radio-wrapper {
+.radioWrapper {
     display: flex;
     align-items: center;
     cursor: pointer;
     width: fit-content;
 }
 
-.radio-wrapper .radio {
+.radio {
     appearance: none;
     width: 20px;
     height: 20px;
@@ -19,16 +19,16 @@
     align-items: center;
 }
 
-.radio-wrapper .radio:checked {
+.radio:checked {
     border-color: #4a90e2;
 }
 
-.radio-wrapper .radio:focus {
+.radio:focus {
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.radio-wrapper .radio:checked::before {
+.radio:checked::before {
     content: '';
     position: absolute;
     width: 60%;

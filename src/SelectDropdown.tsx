@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import type { Option } from './components/Select';
-import Select from './components/Select';
+import type { Option } from './components/widgets/Select';
+import Select from './components/widgets/Select';
+
 const generateOptions = (start: number, count: number): Option[] =>
   Array.from({ length: count }, (_, i) => {
     const val = start + i;

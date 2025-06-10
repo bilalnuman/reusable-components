@@ -1,16 +1,17 @@
 import React, { type InputHTMLAttributes, forwardRef } from 'react';
-import styles from './index.module.css';
+import Styles from './checkbox.module.css';
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
-    label: string;
+    label?: string,
+    prefixClass?: string
 }
 
-const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({ label, ...rest }, ref) => {
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({ label, prefixClass, ...rest }, ref) => {
     return (
-        <label className={styles.checkboxwrapper}>
+        <label className={`${Styles.checkboxWrapper} ${prefixClass}`}>
             <input
                 type="checkbox"
-                className={styles.checkbox}
+                className={Styles.checkbox}
                 ref={ref}
                 {...rest}
             />

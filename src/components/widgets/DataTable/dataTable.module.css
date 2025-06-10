@@ -1,0 +1,184 @@
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.dataTable th,
+.dataTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.dataTable th {
+    background-color: #f4f4f4;
+    color: #333;
+    cursor: pointer;
+}
+
+.dataTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dataTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+.tableControls {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.tableControls input[type="text"] {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.columnsContainer button {
+    border: 1px solid #eeeeee;
+    font-size: 16px;
+    border-radius: 3px;
+    padding: 4px 10px 7px 10px;
+    min-height: 35px;
+}
+
+.columnsContainer button:hover {
+    transition: all 200ms ease-in-out;
+    background: #f4f4f4;
+}
+
+.columnToggle {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+    max-height: 300px;
+    min-width: 200px;
+}
+
+.columnToggleContainer {
+    box-shadow: 0px 0px 8px 1px #d0d0d0;
+    border-radius: 3px;
+    overflow: hidden;
+    padding: 10px 0px;
+    position: absolute;
+    right: 0;
+    margin-top: 10px;
+    background: #fff;
+}
+
+
+.columnToggle li label {
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.columnToggle li label input {
+    width: 17px;
+    height: 17px;
+}
+
+.columnToggle li label input:checked::after {
+    height: 10px;
+    right: 5px;
+    top: 3px;
+}
+
+.columnToggle li label input:checked::before {
+    height: 5px;
+    right: 10px;
+    top: 6px;
+}
+
+.columnToggle .btnLi {
+    padding: 0px 10px;
+}
+
+.columnToggle li label:hover {
+    background: #e6f7ff;
+}
+
+.visibilityResetBtn {
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    background: #e6f7ff;
+}
+
+.tableControls input[type="text"]:focus,
+.columnsContainer button:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+
+
+.tableContainer.stickyHeader {
+    max-height: 500px;
+    overflow: auto;
+    border: 1px solid #ccc;
+}
+
+.tableContainer.stickyHeader thead th {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 2;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
+.stickyHeader {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 2;
+}
+
+.draggableHeader {
+    cursor: grab;
+    user-select: none;
+}
+
+.editInput {
+    border-radius: 3px;
+    padding: 0 10px;
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.inlineEditable {
+    cursor: pointer;
+    position: relative;
+    display: block;
+}
+
+.inlineEditable:hover::after {
+    content: 'Click to edit';
+    position: absolute;
+    top: -1.5em;
+    left: 0;
+    background: #333;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0.9;
+}

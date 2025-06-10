@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { ZodTypeAny } from 'zod';
-import Select, { type Option } from '..';
+import Select, { type Option } from '../Select';
 
 function sanitizeHtml(html: string): string {
     html = html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');

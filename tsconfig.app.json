@@ -22,14 +22,44 @@
       "@src/*": [
         "*"
       ],
+      "@features/*": [
+        "features/*"
+      ],
       "@components/*": [
         "components/*"
       ],
-      "@utils/*": [
-        "utils/*"
+      "@assets/*": [
+        "assets/*"
       ],
-      "@pages/*": [
-        "pages/*"
+      "@constants/*": [
+        "constants/*"
+      ],
+      "@contexts/*": [
+        "contexts/*"
+      ],
+      "@layouts/*": [
+        "layouts/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@stores/*": [
+        "stores/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@enums/*": [
+        "enums/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@types/*": [
+        "types/*"
       ]
     },
     /* Linting */
