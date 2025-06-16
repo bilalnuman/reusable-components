@@ -1,80 +1,103 @@
-import React, { forwardRef } from 'react';
-import clsx from 'clsx';
-import './index.css';
+import React, { useState, forwardRef } from 'react';
+import styles from "./index.module.css"
 
-interface FloatingInputProps {
-    id: string;
-    label: string;
-    type: 'text' | 'email' | 'password' | 'time';
+interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    id?: string;
+    name?: string;
+    label?: string;
+    type?: 'text' | 'email' | 'password' | 'time' | 'number';
     icon?: React.ReactNode;
     error?: string;
     isFloating?: boolean;
+    required?: boolean;
     inputClass?: string;
+    inputContainer?: string;
     floatLabelClass?: string;
     containerClass?: string;
     iconClass?: string;
     errorClass?: string;
-    value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: () => void;
-    name?: string;
+    handleTogglePassword?: (type: string) => void
 }
 
-const TextField = forwardRef<HTMLInputElement, FloatingInputProps>(({
+const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
     id,
     label,
-    type,
+    name,
+    type = 'text',
     icon,
     error,
     isFloating = false,
-    value = '',
+    required = false,
     inputClass = '',
     floatLabelClass = '',
     containerClass = '',
+    inputContainer = '',
     iconClass = '',
     errorClass = '',
+    value,
     onChange,
     onBlur,
-    name,
+    handleTogglePassword,
+    ...rest
 }, ref) => {
-    return (
-        <div className={clsx('textfield-container', containerClass)}>
-            <input
-                id={id}
-                ref={ref}
-                type={type}
-                name={name}
-                value={value}
-                onChange={onChange}
-                onBlur={onBlur}
-                placeholder={isFloating ? ' ' : label}
-                className={clsx(
-                    'textfield-input',
-                    inputClass,
-                    error && 'textfield-input-error'
-                )}
-            />
+    const [focused, setFocused] = useState(false);
+    const handleFocus = () => setFocused(true);
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        onBlur?.(e);
+        setFocused(false);
+    };
+    const isActive = focused || (!!value && value !== '');
 
-            {isFloating && (
+    return (
+        <div className={`${styles.container}${containerClass}`}>
+            {isFloating ? (
                 <label
-                    htmlFor={id}
-                    className={clsx(
-                        'textfield-label label-default',
-                        floatLabelClass
-                    )}
+                    htmlFor={id || name}
+                    className={`${isFloating ? styles.floatLabel : ""} ${error?styles.floatError:""} ${floatLabelClass} ${isActive? styles.focusd:""}`}
                 >
                     {label}
+                    {required && error ? <sup className='required'>*</sup> : null}
+                </label>
+            ) : (
+                <label
+                    htmlFor={id || name}
+                    className={styles.nonFloatingLabel}
+                >
+                    {label}
+                    {required && error ? <sup className='required'>*</sup> : null}
                 </label>
             )}
 
-            {icon && (
-                <span className={clsx('textfield-icon', iconClass)}>
-                    {icon}
-                </span>
-            )}
+            <div className={`${styles.inputContainer} ${inputContainer} ${focused && styles.focusdwring} ${error && styles.error}`}>
+                <input
+                    id={id || name}
+                    name={name}
+                    ref={ref}
+                    type={type}
+                    value={value}
+                    onChange={onChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    placeholder={isFloating ? ' ' : label}
+
+                    className={`${inputClass} ${styles.input} ${error && styles.error} ${styles.icon}`}
+                    {...rest}
+                    autoComplete={type === "password" ? 'new-password' : type === "email" ? "username" : null}
+                />
+
+                {handleTogglePassword && icon && (
+                    <button
+                        type="button"
+                        className={`${styles.fieldIcon} ${iconClass}`}
+                        onClick={() => handleTogglePassword(name)}
+                    >
+                        {icon}
+                    </button>
+                )}
+            </div>
 
             {error && (
-                <p className={clsx('textfield-error', errorClass)}>
+                <p className={`${styles.error} ${errorClass}`}>
                     {error}
                 </p>
             )}
@@ -83,5 +106,4 @@ const TextField = forwardRef<HTMLInputElement, FloatingInputProps>(({
 });
 
 TextField.displayName = 'TextField';
-
 export default TextField;

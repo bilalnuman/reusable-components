@@ -44,7 +44,7 @@ const SelectDropdown: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ padding: '2rem', maxWidth: 400 }}>
       <h2>1️⃣ Single Select</h2>
-      <Controller
+      {/* <Controller
         control={control}
         name="favoriteColor"
         render={({ field }) => (
@@ -86,7 +86,7 @@ const SelectDropdown: React.FC = () => {
             isCheckIcon={false}          
           />
         )}
-      />
+      /> */}
 
       <br />
       <button type="submit">Submit</button>

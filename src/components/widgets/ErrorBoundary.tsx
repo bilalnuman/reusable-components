@@ -30,22 +30,31 @@ class ErrorBoundary extends Component<Props, State> {
 
     render() {
         const { hasError, error, errorInfo } = this.state;
+        const isDev = import.meta.env.MODE !== 'production';
 
         if (hasError) {
             return (
-                <div style={{ padding: '1rem', color: 'crimson', whiteSpace: 'pre-wrap' }}>
-                    <h2>{this.props.fallback}</h2>
-                    {error && (
+                <div style={{ padding: '1rem', whiteSpace: 'pre-wrap', color: 'crimson' }}>
+                    <h2>{this.props.fallback ?? 'Something went wrong.'}</h2>
+
+                    {isDev && error && (
                         <>
-                            <p><strong>Error:</strong> {error.message || String(error)}</p>
+                            <p><strong>Error:</strong> {error.message}</p>
                             <pre>{error.stack}</pre>
                         </>
                     )}
-                    {errorInfo && (
+
+                    {isDev && errorInfo && (
                         <>
                             <p><strong>Component Stack:</strong></p>
                             <pre>{errorInfo.componentStack}</pre>
                         </>
+                    )}
+
+                    {!isDev && (
+                        <button onClick={() => window.location.reload()} style={{ marginTop: '1rem' }}>
+                            Reload Page
+                        </button>
                     )}
                 </div>
             );

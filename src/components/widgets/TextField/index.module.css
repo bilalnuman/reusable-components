@@ -1,0 +1,66 @@
+.container {
+    position: relative;
+}
+
+.container .inputContainer {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin-top: 3px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inputContainer.error {
+    border-color: #dc2626;
+}
+
+.container input {
+    outline: none;
+    background: transparent;
+}
+
+input.icon {
+    width: calc(100% - 30px);
+}
+
+.focusdwring {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.floatLabel {
+    top: 0.70rem;
+    left: 10px;
+    color: #9ca2b0;
+    position: absolute;
+    transition: all 200ms ease-in-out;
+}
+
+label.focusd, label.floatError{
+    transform: translateY(-1rem) !important;
+    background: #fff;
+    line-height: 14px;
+    font-size: 13px;
+    color: #000;
+}
+
+.nonFloatingLabel {
+   margin-top: -3px;
+}
+
+p.error {
+    font-size: 0.875rem;
+    color: #dc2626;
+}
+.fieldIcon svg path,
+.fieldIcon svg circle{
+    stroke: #ced4da;
+}

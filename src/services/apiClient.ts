@@ -1,9 +1,10 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
+const base_url=import.meta.env.VITE_API_URL_BACKED
+console.log(base_url)
 const apiClient = axios.create({
     baseURL: import.meta.env.VITE_API_URL_BACKED,
-    withCredentials: true,
+    // withCredentials: true,
 });
 
 apiClient.interceptors.request.use(

@@ -35,6 +35,8 @@ interface DataTableProps<T> {
     onRowSelectChange?: (selected: Set<number>) => void;
     variant?: "basic" | "classic";
     paginationClassName?: string;
+    noDataPlaceholder?: string
+
 }
 
 type SortConfig<T> = {
@@ -51,6 +53,7 @@ function DataTable<T extends Record<string, any>>({
     columnPosition = false,
     inlineEdit = false,
     columnVisibilitLable = "Set column visibility",
+    noDataPlaceholder = "No Data",
     pagination,
     variant,
     totalPages,
@@ -110,6 +113,11 @@ function DataTable<T extends Record<string, any>>({
             )
         );
     }, [search, localData]);
+    useEffect(() => {
+        setLocalData(data);
+        setSelectedRowIds(new Set())
+        setVisibleColumns(initialVisibility)
+    }, [data]);
 
     const sortedData = useMemo(() => {
         if (!sortConfig) return filteredData;
@@ -327,7 +335,7 @@ function DataTable<T extends Record<string, any>>({
                                                         {String(row[col.key])}
                                                     </span>
                                                 ) : (
-                                                    String(row[col.key])
+                                                    String(row[col.key] ?? noDataPlaceholder)
                                                 )}
                                             </td>
                                         );

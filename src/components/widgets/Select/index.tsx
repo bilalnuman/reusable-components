@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import type { UIEvent } from 'react';
 import './index.css';
 import { CaretIcon } from './CaretIcon';
@@ -11,8 +11,8 @@ export interface Option {
 }
 
 interface SelectProps {
-  value?: Option | Option[] | null;
-  onChange?: (value: Option | Option[] | null) => void;
+  value?: string | string[] | null;
+  onChange?: (value: string | string[] | null) => void;
   getSingleValue?: (value: Option | null) => void;
   options: Option[];
   placeholder?: string;
@@ -20,14 +20,18 @@ interface SelectProps {
   headerClass?: string;
   containerClass?: string;
   isMulti?: boolean;
+  required?: boolean;
   isCheckIcon?: boolean;
   onLoadMore?: () => void;
   isLoadingMore?: boolean;
   enableInfiniteScroll?: boolean;
   searchable?: boolean;
+  error?: string;
+  label?: string
 }
 
-const Select: React.FC<SelectProps> = ({
+// ForwardRef starts here
+const Select = forwardRef<HTMLDivElement, SelectProps>(({
   value,
   onChange,
   getSingleValue = () => { },
@@ -42,22 +46,33 @@ const Select: React.FC<SelectProps> = ({
   isLoadingMore = false,
   enableInfiniteScroll = false,
   searchable = false,
-}) => {
+  required = false,
+  error = '',
+  label
+}, ref) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<HTMLDivElement>(null);
 
+  useImperativeHandle(ref, () => dropdownRef.current as HTMLDivElement);
+
+  const selectedValues = isMulti
+    ? options.filter((o) => (value as string[])?.includes(o.value))
+    : options.find((o) => o.value === value) || null;
+
   const handleSelect = (option: Option) => {
     if (isMulti) {
-      const selectedValues = (value as Option[]) || [];
-      const exists = selectedValues.some((item) => item.value === option.value);
-      const newValue = exists
-        ? selectedValues.filter((item) => item.value !== option.value)
-        : [...selectedValues, option];
-      onChange(newValue);
+      const selected = new Set(value as string[]);
+      if (selected.has(option.value)) {
+        selected.delete(option.value);
+      } else {
+        selected.add(option.value);
+      }
+      const newValue = Array.from(selected);
+      onChange?.(newValue);
     } else {
-      onChange(option);
+      onChange?.(option.value);
       setIsOpen(false);
     }
     getSingleValue(option);
@@ -65,20 +80,19 @@ const Select: React.FC<SelectProps> = ({
 
   const isSelected = (option: Option) => {
     if (isMulti) {
-      return (value as Option[])?.some((item) => item.value === option.value);
+      return (value as string[])?.includes(option.value);
     }
-    return (value as Option)?.value === option.value;
+    return value === option.value;
   };
 
   const displayValue = () => {
     if (isMulti) {
-      return (value as Option[])?.length
-        ? (value as Option[]).map((v) => v.label).join(', ')
-        : placeholder;
+      return (selectedValues as Option[])?.length
+        ? (selectedValues as Option[]).map((v) => v.label).join(', ')
+        : <span className='placeholder'>{placeholder}</span>;
     }
-    return (value as Option)?.label || placeholder;
+    return (selectedValues as Option)?.label || <span className='placeholder'>{placeholder}</span>;
   };
-
 
   const handleScroll = (e: UIEvent<HTMLDivElement>) => {
     if (!enableInfiniteScroll) return;
@@ -105,22 +119,32 @@ const Select: React.FC<SelectProps> = ({
       document.removeEventListener('mousedown', handleClickOutside);
       setIsOpen(false);
       setSearchTerm('');
-      // onChange(isMulti ? [] : null);
       getSingleValue(null);
     };
   }, []);
 
   return (
     <div className={clsx('select-container', prefixClass, containerClass)} ref={dropdownRef}>
-      <div className={clsx('select-header', headerClass)} onClick={() => setIsOpen(!isOpen)} tabIndex={0}>
+      {label ? <div className='select-label'>{label}
+         {required && error?<sup className='required'>*</sup>:null}
+      </div> : null}
+      <div
+        className={clsx('select-header', headerClass, error ? "error-border" : "")}
+        onClick={() => setIsOpen(!isOpen)}
+        tabIndex={0}
+      >
         <span className={isMulti ? 'multiple-value' : 'single-value'}>{displayValue()}</span>
         <span className={`caret-icon arrow ${isOpen ? 'open' : ''}`}>
-          <CaretIcon />
+          <CaretIcon fill='#9ca2b0' />
         </span>
       </div>
 
       {isOpen && (
-        <div className="select-options" ref={optionsRef} onScroll={enableInfiniteScroll ? handleScroll : undefined}>
+        <div
+          className="select-options"
+          ref={optionsRef}
+          onScroll={enableInfiniteScroll ? handleScroll : undefined}
+        >
           {searchable && (
             <div className="select-search">
               <input
@@ -157,8 +181,9 @@ const Select: React.FC<SelectProps> = ({
           )}
         </div>
       )}
+      {error && <div className="error">{error}</div>}
     </div>
   );
-};
+});
 
 export default Select;

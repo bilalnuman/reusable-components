@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { registrationSchema, type RegistrationFormValues } from '@features/auth/schemas/registrationSchema';
+import { registrationSchema, type RegistrationFormValues } from '../schemas/registrationSchema';
 
 export const useRegistrationForm = () => {
     const {

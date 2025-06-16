@@ -110,7 +110,7 @@ export const Filters = forwardRef<FiltersRef, FiltersProps>(
 
         return (
             <>
-                <List className="flex items-center gap-3 flex-wrap">
+                {/* <List className="flex items-center gap-3 flex-wrap">
                     <ListItem className="flex flex-col gap-1">
                         <label>Brands</label>
                         {brands.map((brand) => {
@@ -156,7 +156,7 @@ export const Filters = forwardRef<FiltersRef, FiltersProps>(
 
                 <div className="mt-5 flex gap-2">
                     <Button label="Apply" onClick={handleApply} className="px-5" />
-                </div>
+                </div> */}
             </>
         );
     }

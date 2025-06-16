@@ -7,14 +7,16 @@ import {
 
 // List products
 
-export const useProducts = (filters: string, enabled: boolean = true) => {
-  return useQuery({
-    queryKey: ['products', filters],
-    queryFn: () => fetchProducts(filters),
-    enabled,
-    staleTime: filters ? 1000 * 60 : 0,
-  });
+export const useProducts = (query: string) => {
+    return useQuery({
+        queryKey: ['products', query],
+        queryFn: () => fetchProducts(query),
+        staleTime: 0,
+        placeholderData:(prev)=>prev
+    });
 };
+
+
 
 
 // Get single product

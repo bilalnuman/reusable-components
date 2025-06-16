@@ -1,0 +1,43 @@
+.textareaWrapper {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+}
+
+.textareaWrapper:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.stars {
+    font-size: 0.875rem;
+    color: #dc2626;
+}
+
+p.error {
+    font-size: 0.875rem;
+    color: #dc2626;
+    line-height: 0.675rem;
+}
+
+textarea.error {
+    border-color: #dc2626;
+}
+
+.textareaLabel {
+    padding-bottom: 3px
+}
+
+.required {
+    color: #dc2626;
+    font-size: 16px;
+    position: relative;
+    top: -4px;
+    right: -2px;
+}

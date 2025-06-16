@@ -18,44 +18,44 @@ const brands: Option[] = [
 ];
 
 const Home = () => {
-    const filterRef = useRef<FiltersRef>(null);
-    const searchRef = useRef<SearchInputRef>(null);
-    const router = useNavigate();
-    const [filterReady, setFilterReady] = useState<boolean>(false);
-    const [queryFilters, setQueryFilters] = useState<string>("");
-    const { data, isLoading, isError, error } = useProducts(queryFilters, filterReady);
-    const handleApplyFilters = (filters) => {
-        setQueryFilters(`?${filters}`);
-        setFilterReady(true)
-    };
+    // const filterRef = useRef<FiltersRef>(null);
+    // const searchRef = useRef<SearchInputRef>(null);
+    // const router = useNavigate();
+    // const [filterReady, setFilterReady] = useState<boolean>(false);
+    // const [queryFilters, setQueryFilters] = useState<string>("");
+    // const { data, isLoading, isError, error } = useProducts(queryFilters, filterReady);
+    // const handleApplyFilters = (filters) => {
+    //     setQueryFilters(`?${filters}`);
+    //     setFilterReady(true)
+    // };
 
-    const resetFilters = () => {
-        filterRef.current?.reset();
-        searchRef.current?.clear();
-        setQueryFilters("");
-        router("/");
-        setFilterReady(true)
-    };
+    // const resetFilters = () => {
+    //     filterRef.current?.reset();
+    //     searchRef.current?.clear();
+    //     setQueryFilters("");
+    //     router("/");
+    //     setFilterReady(true)
+    // };
 
-    const handleSearchChange = (value: string) => {
-        const newFilter = value ? `?${value}` : '';
-        if (newFilter !== queryFilters) {
-            setQueryFilters(newFilter);
-        }
-    };
+    // const handleSearchChange = (value: string) => {
+    //     const newFilter = value ? `?${value}` : '';
+    //     if (newFilter !== queryFilters) {
+    //         setQueryFilters(newFilter);
+    //     }
+    // };
 
-    useEffect(() => {
-        const params = window.location.search;
-        setQueryFilters(params);
-        setFilterReady(true)
-        setTimeout(()=>{
-             setFilterReady(false)
-        },300)
-    }, [])
-    console.log(data)
+    // useEffect(() => {
+    //     const params = window.location.search;
+    //     setQueryFilters(params);
+    //     setFilterReady(true)
+    //     setTimeout(()=>{
+    //          setFilterReady(false)
+    //     },300)
+    // }, [])
+    // console.log(data)
     return (
         <>
-            <SearchInput
+            {/* <SearchInput
                 onChange={handleSearchChange}
                 paramName="brand"
                 ref={searchRef}
@@ -73,7 +73,7 @@ const Home = () => {
 
             {isLoading && !filterReady && <div>Loading...</div>}
             {isError && <div>Error: {error.message}</div>}
-            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+            {data && <pre>{JSON.stringify(data, null, 2)}</pre>} */}
         </>
     );
 };
