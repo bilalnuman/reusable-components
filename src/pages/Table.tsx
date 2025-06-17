@@ -3,9 +3,9 @@ import DataTable from "@src/components/widgets/DataTable";
 import type { ProductType } from "@src/types/products";
 import { useTableLogic } from "@src/features/products/useTableLogic";
 import { Notfound } from "@src/components/widgets";
-import { useRef } from "react";
 import TextField from "@src/components/widgets/TextField";
 import Checkbox from "@src/components/widgets/Checkbox";
+import Button from "@src/components/widgets/Button";
 
 const Table = () => {
     const {
@@ -20,14 +20,14 @@ const Table = () => {
         selectedBrands,
         setSearchInput,
         toggleBrand,
+        resetFilters,
         handlePageChange,
     } = useTableLogic();
 
-    const inputRef = useRef<any>("")
-
+    
     if (error) throw new Error("Something went wrong");
     if (isLoading) return <Spinner size={60} />;
-
+    const isFilter=searchInput||selectedBrands.length
 
 
     return (
@@ -38,11 +38,10 @@ const Table = () => {
                         key={i}
                         label={brand}
                         checked={selectedBrands.includes(brand)}
-                        onChange={() => { toggleBrand(brand); inputRef.current.value = "" }}
+                        onChange={() => toggleBrand(brand)}
                     />
                 ))}
                 <TextField
-                    ref={inputRef}
                     type="text"
                     placeholder="Search products..."
                     value={searchInput}
@@ -50,6 +49,7 @@ const Table = () => {
                     style={{ padding: "4px 8px" }}
                     inputContainer="h-10"
                 />
+                {isFilter?<Button label="Clear" className="!h-10" onClick={()=>resetFilters()}/>:null}
             </div>
             {!rows?.length ? <Notfound /> :
                 <DataTable<ProductType>

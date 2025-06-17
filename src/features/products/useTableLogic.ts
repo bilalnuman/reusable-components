@@ -24,9 +24,9 @@ export const useTableLogic = () => {
             updated.set("search", debouncedSearch.trim());
             setSearchParams(updated);
         }
-        
+
         setTimeout(() => {
-          !searchParams.has("brand") && setSearchParams(updated);
+            !searchParams.has("brand") && setSearchParams(updated);
         }, 0)
     }, [debouncedSearch]);
 
@@ -59,6 +59,10 @@ export const useTableLogic = () => {
         setSearchParams(updated);
     };
 
+    const resetFilters = () => {
+        setSearchInput("")
+         navigate('/table');
+    }
 
     const handlePageChange = (page: number) => {
         const updated = new URLSearchParams(searchParams.toString());
@@ -90,6 +94,7 @@ export const useTableLogic = () => {
         setSearchInput,
         toggleBrand,
         handlePageChange,
+        resetFilters
 
     };
 };

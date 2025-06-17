@@ -332,10 +332,10 @@ function DataTable<T extends Record<string, any>>({
                                                     />
                                                 ) : inlineEdit && col.editable ? (
                                                     <span tabIndex={0} className={Styles.inlineEditable} onClick={() => handleCellClick(rowIndex, key, String(row[col.key]))}>
-                                                        {String(row[col.key])}
+                                                        {String(row[col.key]?row[col.key]:noDataPlaceholder)}
                                                     </span>
                                                 ) : (
-                                                    String(row[col.key] ?? noDataPlaceholder)
+                                                    String(row[col.key]?row[col.key]: noDataPlaceholder)
                                                 )}
                                             </td>
                                         );
